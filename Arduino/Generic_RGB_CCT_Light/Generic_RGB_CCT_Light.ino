@@ -207,14 +207,14 @@ void lightEngine() {
         inTransition = true;
         light.currentColors[color] += light.stepLevel[color];
         if ((light.stepLevel[color] > 0.0f && light.currentColors[color] > light.colors[color]) || (light.stepLevel[color] < 0.0f && light.currentColors[color] < light.colors[color])) light.currentColors[color] = light.colors[color];
-        analogWrite(pins[color], (int)(light.currentColors[color] * 4.0));
+        analogWrite(pins[color], (int)(light.currentColors[color] * 4.0f));
       }
     } else {
       if (light.currentColors[color] != 0) {
         inTransition = true;
         light.currentColors[color] -= light.stepLevel[color];
         if (light.currentColors[color] < 0.0f) light.currentColors[color] = 0;
-        analogWrite(pins[color], (int)(light.currentColors[color] * 4.0));
+        analogWrite(pins[color], (int)(light.currentColors[color] * 4.0f));
       }
     }
   }
@@ -447,6 +447,7 @@ void setup() {
       lightEngine();
     }
   }
+  WiFi.mode(WIFI_STA);
   WiFiManager wifiManager;
 
   if (!useDhcp) {
@@ -539,7 +540,7 @@ void setup() {
 
       if (root.containsKey("alert") && root["alert"] == "select") {
         if (light.lightState) {
-          light.currentColors[0] = 0; light.currentColors[1] = 0; light.currentColors[2] = 0; light.currentColors[3] = 0;
+          light.currentColors[0] = 0; light.currentColors[1] = 0; light.currentColors[2] = 0; light.currentColors[3] = 0; light.currentColors[4] = 0;
         } else {
           light.currentColors[3] = 126; light.currentColors[4] = 126;
         }
